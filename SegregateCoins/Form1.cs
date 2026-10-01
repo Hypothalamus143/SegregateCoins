@@ -65,7 +65,7 @@ namespace SegregateCoins
                 }
                 else
                 {
-                    p = Pens.Red;
+                    p = Pens.Orange;
                 }
                 //Console.WriteLine($"{scaledX}, {scaledY}, {scaledRadius}, {centerX}, {centerY}, {radius}");
                 g.DrawArc(p, scaledX - scaledRadius, scaledY - scaledRadius, 2 * scaledRadius, 2 * scaledRadius, 0, 360);
@@ -152,10 +152,13 @@ namespace SegregateCoins
             }
             return true;
         }
-
-        private void processButton_Click(object sender, EventArgs e)
+        private void countAndRefresh()
         {
-            getCoins();
+            countCoins();
+            pictureBox1.Refresh();
+        }
+        private void countCoins()
+        {
             int fivePesoThreshold = (int)fivePesoThresholdNumericUpDown.Value;
             int onePesoThreshold = (int)onePesoNumericUpDown.Value;
             int twentyFiveCentThreshold = (int)twentyFiveCentNumericUpDown.Value;
@@ -165,13 +168,13 @@ namespace SegregateCoins
             int twentyFiveCentCount = 0;
             int tenCentCount = 0;
             int fiveCentCount = 0;
-            foreach(Tuple<int, int, int, int> coin in coins)
+            foreach (Tuple<int, int, int, int> coin in coins)
             {
                 int radius = coin.Item3;
                 if (radius >= fivePesoThreshold) fivePesoCount++;
                 else if (radius >= onePesoThreshold) onePesoCount++;
-                else if(radius >= twentyFiveCentThreshold) twentyFiveCentCount++;
-                else if(radius>= tenCentThreshold) tenCentCount++;
+                else if (radius >= twentyFiveCentThreshold) twentyFiveCentCount++;
+                else if (radius >= tenCentThreshold) tenCentCount++;
                 else fiveCentCount++;
             }
             CoinsDetected.Text = $"Five Peso Count: {fivePesoCount}\n";
@@ -179,27 +182,31 @@ namespace SegregateCoins
             CoinsDetected.Text += $"Twenty Five Cent Count: {twentyFiveCentCount}\n";
             CoinsDetected.Text += $"Ten Cent Count: {tenCentCount}\n";
             CoinsDetected.Text += $"Five Cent Count: {fiveCentCount}";
-            pictureBox1.Refresh();
+        }
+        private void processButton_Click(object sender, EventArgs e)
+        {
+            getCoins();
+            countAndRefresh();
         }
 
         private void fivePesoThresholdNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            pictureBox1.Refresh();
+            countAndRefresh();
         }
 
         private void onePesoNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            pictureBox1.Refresh();
+            countAndRefresh();
         }
 
         private void twentyFiveCentNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            pictureBox1.Refresh();
+            countAndRefresh();
         }
 
         private void tenCentNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            pictureBox1.Refresh();
+            countAndRefresh();
         }
     }
 }

@@ -248,7 +248,7 @@
             this.tenCentNumericUpDown.Size = new System.Drawing.Size(120, 26);
             this.tenCentNumericUpDown.TabIndex = 18;
             this.tenCentNumericUpDown.Value = new decimal(new int[] {
-            53,
+            54,
             0,
             0,
             0});
